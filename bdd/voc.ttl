@@ -1,0 +1,71 @@
+@prefix ex: <http://example.com/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ex:Utilisateurs rdf:type rdf:Class .
+ex:ID_Utilisateur rdf:type rdf:Property .
+ex:Nom rdf:type rdf:Property .
+ex:Prenom rdf:type rdf:Property .
+ex:Email rdf:type rdf:Property .
+ex:MotDePasse rdf:type rdf:Property .
+ex:AutresInfos rdf:type rdf:Property .
+
+ex:Achats rdf:type rdf:Class .
+ex:ID_Achat rdf:type rdf:Property .
+ex:ID_Utilisateur_Achat rdf:type rdf:Property .
+ex:DateAchat rdf:type rdf:Property .
+ex:MontantTotal rdf:type rdf:Property .
+
+ex:Produits rdf:type rdf:Class .
+ex:ID_Produit rdf:type rdf:Property .
+ex:NomProduit rdf:type rdf:Property .
+ex:Description rdf:type rdf:Property .
+ex:Prix rdf:type rdf:Property .
+ex:StockDisponible rdf:type rdf:Property .
+
+ex:PointsFidelite rdf:type rdf:Class .
+ex:ID_Point rdf:type rdf:Property .
+ex:ID_Utilisateur_Points rdf:type rdf:Property .
+ex:NombrePoints rdf:type rdf:Property .
+
+ex:HistoriquePoints rdf:type rdf:Class .
+ex:ID_Historique rdf:type rdf:Property .
+ex:ID_Utilisateur_Historique rdf:type rdf:Property .
+ex:NombrePoints_Historique rdf:type rdf:Property .
+ex:TypeOperation rdf:type rdf:Property .
+ex:DateOperation rdf:type rdf:Property .
+
+ex:utilisateur1 rdf:type ex:Utilisateurs ;
+    ex:ID_Utilisateur 1 ;
+    ex:Nom "Dupont" ;
+    ex:Prenom "Jean" ;
+    ex:Email "jean.dupont@example.com" ;
+    ex:MotDePasse "motdepasse123" ;
+    ex:AutresInfos "Informations sur Jean Dupont" .
+
+ex:achat1 rdf:type ex:Achats ;
+    ex:ID_Achat 1 ;
+    ex:ID_Utilisateur_Achat 1 ;
+    ex:DateAchat "2023-11-05" ;
+    ex:MontantTotal 120.50 .
+
+ex:produit1 rdf:type ex:Produits ;
+    ex:ID_Produit 1 ;
+    ex:NomProduit "Ordinateur Portable" ;
+    ex:Description "Ordinateur portable haut de gamme" ;
+    ex:Prix 1000.00 ;
+    ex:StockDisponible 50 .
+
+ex:pointsFidelite1 rdf:type ex:PointsFidelite ;
+    ex:ID_Point 1 ;
+    ex:ID_Utilisateur_Points 1 ;
+    ex:NombrePoints 30 .
+
+ex:historiquePoints1 rdf:type ex:HistoriquePoints ;
+    ex:ID_Historique 1 ;
+    ex:ID_Utilisateur_Historique 1 ;
+    ex:NombrePoints_Historique 10 ;
+    ex:TypeOperation "Gagne" ;
+    ex:DateOperation "2023-11-05" .
+
