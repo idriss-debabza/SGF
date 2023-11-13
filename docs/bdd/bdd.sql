@@ -1,42 +1,37 @@
-CREATE TABLE Utilisateurs (
-    ID_Utilisateur INT PRIMARY KEY AUTO_INCREMENT,
-    Nom VARCHAR(50),
-    Prenom VARCHAR(50),
-    Email VARCHAR(100),
-    MotDePasse VARCHAR(255),
-    AutresInfos TEXT
-);
+Enum "TypeOperation_enum" {
+  "Gagne"
+  "Utilise"
+}
 
-CREATE TABLE Achats (
-    ID_Achat INT PRIMARY KEY AUTO_INCREMENT,
-    ID_Utilisateur INT,
-    ID_Produit INT, -- Added foreign key for Produits
-    DateAchat DATE,
-    MontantTotal DECIMAL(10, 2),
-    FOREIGN KEY (ID_Utilisateur) REFERENCES Utilisateurs(ID_Utilisateur),
-    FOREIGN KEY (ID_Produit) REFERENCES Produits(ID_Produit) -- Foreign key for Produits
-);
+Table "Utilisateurs" {
+  "ID_Utilisateur" INT [pk, increment]
+  "Nom" VARCHAR(50)
+  "Prenom" VARCHAR(50)
+  "Email" VARCHAR(100)
+  "MotDePasse" VARCHAR(255)
+  "Points" INT
+}
 
-CREATE TABLE Produits (
-    ID_Produit INT PRIMARY KEY AUTO_INCREMENT,
-    NomProduit VARCHAR(100),
-    Description TEXT,
-    Prix DECIMAL(10, 2),
-    StockDisponible INT
-);
+Table "Achats" {
+  "ID_Achat" INT [pk, increment]
+  "ID_Utilisateur" INT [ref: > Utilisateurs.ID_Utilisateur]
+  "ID_Produit" INT [ref: > Produits.ID_Produit]
+  "DateAchat" DATE
+}
 
-CREATE TABLE PointsFidelite (
-    ID_Point INT PRIMARY KEY AUTO_INCREMENT,
-    ID_Utilisateur INT,
-    NombrePoints INT,
-    FOREIGN KEY (ID_Utilisateur) REFERENCES Utilisateurs(ID_Utilisateur)
-);
+Table "Produits" {
+  "ID_Produit" INT [pk, increment]
+  "NomProduit" VARCHAR(100)
+  "Description" TEXT
+  "Prix" DECIMAL(10,2)
+  "StockDisponible" INT
+}
 
-CREATE TABLE HistoriquePoints (
-    ID_Historique INT PRIMARY KEY AUTO_INCREMENT,
-    ID_Utilisateur INT,
-    NombrePoints INT,
-    TypeOperation ENUM('Gagne', 'Utilise'),
-    DateOperation DATE,
-    FOREIGN KEY (ID_Utilisateur) REFERENCES Utilisateurs(ID_Utilisateur)
-);
+Table "HistoriquePoints" {
+  "ID_Historique" INT [pk, increment]
+  "ID_Utilisateur" INT [ref: > Utilisateurs.ID_Utilisateur]
+  "NombrePoints" INT
+  "TypeOperation" TypeOperation_enum
+  "DateOperation" DATE
+}
+
