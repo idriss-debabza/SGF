@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Omeka S User Page</title>
+  </head>
+  <body>
+    <h1>Omeka S User Page</h1>
+    <button onclick="fetchOmekaSUserData()">Load User</button>
+    <div id="result"></div>
+
+    <script>
+      function fetchOmekaSUserData() {
+        const apiUrl = "http://localhost/omeka/api/users";
+        const apiKeyIdentity = "jF0oS8Sr5otOabCd1JDCJGbvfm5foTpo";
+        const apiKeyCredential = "onlrGLrrBMuYeJqUyuShcASXasNMr5b6";
+
+        fetch(
+          `${apiUrl}?key_identity=${apiKeyIdentity}&key_credential=${apiKeyCredential}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "onlrGLrrBMuYeJqUyuShcASXasNMr5b6",
+              Accept: "*/*",
+            },
+            mode: "no-cors",
+          }
+        )
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+          })
+          .then((data) => {
+            console.log(data);
+            document.getElementById("result").innerHTML = JSON.stringify(
+              data
+              //   null,
+              //   2
+            );
+          })
+          .catch((error) => {
+            console.error(
+              "Erreur lors de la récupération des données depuis Omeka S",
+              error
+            );
+          });
+      }
+    </script>
+  </body>
+</html>
