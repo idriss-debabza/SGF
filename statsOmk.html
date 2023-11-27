@@ -1,54 +1,134 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Omeka S User Page</title>
-  </head>
-  <body>
-    <h1>Omeka S User Page</h1>
-    <button onclick="fetchOmekaSUserData()">Load User</button>
-    <div id="result"></div>
+
+    <!-- Bootstrap CDN link -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+        crossorigin="anonymous">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">Omeka S User Page</h1>
+
+        <div class="btn-group mb-4" role="group">
+            <button type="button" class="btn btn-primary" onclick="fetchOmekaSUserData()">Load User</button>
+            <button type="button" class="btn btn-primary" onclick="fetchOmekaSResourceTemplates()">Load Resource Templates</button>
+        </div>
+
+        <div id="result"></div>
+    </div>
+
+    <!-- Bootstrap JS and Popper.js (required for Bootstrap JavaScript components) -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
 
     <script>
-      function fetchOmekaSUserData() {
-        const apiUrl = "http://localhost/omeka/api/users";
-        const apiKeyIdentity = "jF0oS8Sr5otOabCd1JDCJGbvfm5foTpo";
-        const apiKeyCredential = "onlrGLrrBMuYeJqUyuShcASXasNMr5b6";
+        function fetchOmekaSUserData() {
+            const apiUrl = "http://localhost/omeka-s/api/users";
+            const apiKeyIdentity = "0F6w9CdbGeBLc13ot9sdej78BgwSDsRx";
+            const apiKeyCredential = "cVTmicstic9zeprsk0dQ0UrjUT92egyY";
 
-        fetch(
-          `${apiUrl}?key_identity=${apiKeyIdentity}&key_credential=${apiKeyCredential}`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: "onlrGLrrBMuYeJqUyuShcASXasNMr5b6",
-              Accept: "*/*",
-            },
-            mode: "no-cors",
-          }
-        )
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-            return response.json();
-          })
-          .then((data) => {
-            console.log(data);
-            document.getElementById("result").innerHTML = JSON.stringify(
-              data
-              //   null,
-              //   2
-            );
-          })
-          .catch((error) => {
-            console.error(
-              "Erreur lors de la récupération des données depuis Omeka S",
-              error
-            );
-          });
-      }
+            fetch(
+                `${apiUrl}?key_identity=${apiKeyIdentity}&key_credential=${apiKeyCredential}`,
+                {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: "cVTmicstic9zeprsk0dQ0UrjUT92egyY",
+                        Accept: "*/*",
+                    },
+                    mode: "cors",
+                }
+            )
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then((data) => {
+                    console.log(data);
+                    let html = '<table class="table table-striped"><thead><tr>';
+                    for (let key in data[0]) {
+                        html += `<th>${key}</th>`;
+                    }
+                    html += '</tr></thead><tbody>';
+                    for (let item of data) {
+                        html += '<tr>';
+                        for (let key in item) {
+                            html += `<td>${item[key]}</td>`;
+                        }
+                        html += '</tr>';
+                    }
+                    html += '</tbody></table>';
+                    document.getElementById("result").innerHTML = html;
+                })
+                .catch((error) => {
+                    console.error(
+                        "Erreur lors de la récupération des données depuis Omeka S",
+                        error
+                    );
+                });
+        }
+
+        function fetchOmekaSResourceTemplates() {
+            const apiUrl = "http://localhost/omeka-s/api/resource_templates";
+            const apiKeyIdentity = "0F6w9CdbGeBLc13ot9sdej78BgwSDsRx";
+            const apiKeyCredential = "cVTmicstic9zeprsk0dQ0UrjUT92egyY";
+
+            fetch(
+                `${apiUrl}?key_identity=${apiKeyIdentity}&key_credential=${apiKeyCredential}`,
+                {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: "cVTmicstic9zeprsk0dQ0UrjUT92egyY",
+                        Accept: "*/*",
+                    },
+                    mode: "cors",
+                }
+            )
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then((data) => {
+                    console.log(data);
+                    let html = '<table class="table table-striped"><thead><tr>';
+                    for (let key in data[0]) {
+                        html += `<th>${key}</th>`;
+                    }
+                    html += '</tr></thead><tbody>';
+                    for (let item of data) {
+                        html += '<tr>';
+                        for (let key in item) {
+                            html += `<td>${item[key]}</td>`;
+                        }
+                        html += '</tr>';
+                    }
+                    html += '</tbody></table>';
+                    document.getElementById("result").innerHTML = html;
+                })
+                .catch((error) => {
+                    console.error(
+                        "Erreur lors de la récupération des modèles de ressources depuis Omeka S",
+                        error
+                    );
+                });
+        }
     </script>
-  </body>
+</body>
 </html>
