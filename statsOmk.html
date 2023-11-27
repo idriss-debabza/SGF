@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Omeka S User Page</title>
-
-    <!-- Bootstrap CDN link -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
         crossorigin="anonymous">
 </head>
+
 <body>
     <div class="container mt-5">
         <h1 class="mb-4">Omeka S User Page</h1>
@@ -17,12 +17,12 @@
         <div class="btn-group mb-4" role="group">
             <button type="button" class="btn btn-primary" onclick="fetchOmekaSUserData()">Load User</button>
             <button type="button" class="btn btn-primary" onclick="fetchOmekaSResourceTemplates()">Load Resource Templates</button>
+            <button type="button" class="btn btn-primary" onclick="createItem()">Create a New Item</button>
         </div>
 
         <div id="result"></div>
     </div>
 
-    <!-- Bootstrap JS and Popper.js (required for Bootstrap JavaScript components) -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
@@ -34,101 +34,111 @@
         crossorigin="anonymous"></script>
 
     <script>
-        function fetchOmekaSUserData() {
-            const apiUrl = "http://localhost/omeka-s/api/users";
-            const apiKeyIdentity = "0F6w9CdbGeBLc13ot9sdej78BgwSDsRx";
-            const apiKeyCredential = "cVTmicstic9zeprsk0dQ0UrjUT92egyY";
+        const apiUrl = "http://localhost/omeka-s/api";
+        const apiKeyIdentity = "0F6w9CdbGeBLc13ot9sdej78BgwSDsRx";
+        const apiKeyCredential = "cVTmicstic9zeprsk0dQ0UrjUT92egyY";
 
-            fetch(
-                `${apiUrl}?key_identity=${apiKeyIdentity}&key_credential=${apiKeyCredential}`,
-                {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: "cVTmicstic9zeprsk0dQ0UrjUT92egyY",
-                        Accept: "*/*",
-                    },
-                    mode: "cors",
-                }
-            )
-                .then((response) => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! Status: ${response.status}`);
-                    }
-                    return response.json();
-                })
-                .then((data) => {
-                    console.log(data);
-                    let html = '<table class="table table-striped"><thead><tr>';
-                    for (let key in data[0]) {
-                        html += `<th>${key}</th>`;
-                    }
-                    html += '</tr></thead><tbody>';
-                    for (let item of data) {
-                        html += '<tr>';
-                        for (let key in item) {
-                            html += `<td>${item[key]}</td>`;
-                        }
-                        html += '</tr>';
-                    }
-                    html += '</tbody></table>';
-                    document.getElementById("result").innerHTML = html;
-                })
-                .catch((error) => {
-                    console.error(
-                        "Erreur lors de la récupération des données depuis Omeka S",
-                        error
-                    );
-                });
+        function fetchOmekaSUserData() {
+            fetch(`${apiUrl}/users?key_identity=${apiKeyIdentity}&key_credential=${apiKeyCredential}`)
+                .then(handleResponse)
+                .then(data => displayData(data))
+                .catch(handleError);
         }
 
         function fetchOmekaSResourceTemplates() {
-            const apiUrl = "http://localhost/omeka-s/api/resource_templates";
-            const apiKeyIdentity = "0F6w9CdbGeBLc13ot9sdej78BgwSDsRx";
-            const apiKeyCredential = "cVTmicstic9zeprsk0dQ0UrjUT92egyY";
+            fetch(`${apiUrl}/resource_templates?key_identity=${apiKeyIdentity}&key_credential=${apiKeyCredential}`)
+                .then(handleResponse)
+                .then(data => displayData(data))
+                .catch(handleError);
+        }
 
-            fetch(
-                `${apiUrl}?key_identity=${apiKeyIdentity}&key_credential=${apiKeyCredential}`,
-                {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: "cVTmicstic9zeprsk0dQ0UrjUT92egyY",
-                        Accept: "*/*",
-                    },
-                    mode: "cors",
+        function createItem() {
+            const data = generateRandomData();
+            fetch(`${apiUrl}/items?key_identity=${apiKeyIdentity}&key_credential=${apiKeyCredential}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: apiKeyCredential,
+                    Accept: "*/*",
+                },
+                body: JSON.stringify(data),
+                mode: "cors",
+            })
+                .then(handleResponse)
+                .then(responseData => console.log(responseData))
+                .catch(handleError);
+        }
+
+        function generateRandomData() {
+          const randomEmail = `user${Math.floor(Math.random() * 1000)}@example.com`;
+
+            return {
+                "o:title": "Item1",  
+                "o:resource_template": {
+                    "o:id": 7,  
+                },
+                "o:resource_class": {
+                    "o:id": 2,  
+                },
+                "o:owner": {
+                    "o:id": 1,  
+                },
+                "o:is_public": true,
+                "o:resource": {
+                    "@id": 7,
+                    "o:title": "Random",  
+                },
+                "o:values": {
+                    "Email": [
+                        {
+                            "property_id": 1,  
+                            "property_label": "Email",
+                            "@value": randomEmail,
+                            "type": "literal",
+                        },
+                    ],
+                    "ID_Historique": [
+                        {
+                            "property_id": 2,  
+                            "property_label": "ID_Historique",
+                            "@value": Math.floor(Math.random() * 100),
+                            "type": "literal",
+                        },
+                    ],
+                    
+                },
+            };
+}
+
+
+        function handleResponse(response) {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        }
+
+        function displayData(data) {
+            let html = '<table class="table table-striped"><thead><tr>';
+            for (let key in data[0]) {
+                html += `<th>${key}</th>`;
+            }
+            html += '</tr></thead><tbody>';
+            for (let item of data) {
+                html += '<tr>';
+                for (let key in item) {
+                    html += `<td>${item[key]}</td>`;
                 }
-            )
-                .then((response) => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! Status: ${response.status}`);
-                    }
-                    return response.json();
-                })
-                .then((data) => {
-                    console.log(data);
-                    let html = '<table class="table table-striped"><thead><tr>';
-                    for (let key in data[0]) {
-                        html += `<th>${key}</th>`;
-                    }
-                    html += '</tr></thead><tbody>';
-                    for (let item of data) {
-                        html += '<tr>';
-                        for (let key in item) {
-                            html += `<td>${item[key]}</td>`;
-                        }
-                        html += '</tr>';
-                    }
-                    html += '</tbody></table>';
-                    document.getElementById("result").innerHTML = html;
-                })
-                .catch((error) => {
-                    console.error(
-                        "Erreur lors de la récupération des modèles de ressources depuis Omeka S",
-                        error
-                    );
-                });
+                html += '</tr>';
+            }
+            html += '</tbody></table>';
+            document.getElementById("result").innerHTML = html;
+        }
+
+        function handleError(error) {
+            console.error("Error:", error);
         }
     </script>
 </body>
+
 </html>
