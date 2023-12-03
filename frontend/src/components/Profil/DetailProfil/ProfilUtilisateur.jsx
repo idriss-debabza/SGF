@@ -1,9 +1,10 @@
 import React from 'react';
-import { Typography, Avatar, Button } from "@mui/material";
+import { Typography, Avatar, Button, Paper } from "@mui/material";
 
-const ProfilUtilisateur = ({ user, handleLogout }) => {
+const ProfilUtilisateur = ({handleLogout }) => {
     return (
-        <div style={{ textAlign: "center" }}>
+        
+        <Paper elevation={3} style={{ maxWidth: '300px', margin: 'auto', padding: '20px', textAlign: 'center' }}>
             <Avatar
                 alt="User Avatar"
                 src=""
@@ -11,19 +12,25 @@ const ProfilUtilisateur = ({ user, handleLogout }) => {
                     width: "100px",
                     height: "100px",
                     marginBottom: "20px",
+                    border: "2px solid #000",
+                    margin: "auto",
+                    marginTop: "20px",
                 }}
             />
-            {user && (
-                <>
-                    <Typography variant="h6" gutterBottom>
-                        {user.prenom} {user.nom}
+            
+                
+                
+                <Typography variant="h6" style={{ marginBottom: '20px' }}>
+
+                        utilisateur
                     </Typography>
-                </>
-            )}
-            <Button variant="contained" color="secondary" onClick={handleLogout}>
+                
+            
+            <Button variant="contained" color="primary" onClick={handleLogout} style={{ marginTop: '20px' }}>
                 Déconnexion
             </Button>
-        </div>
+        </Paper>
+        
     );
 };
 
