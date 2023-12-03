@@ -21,7 +21,6 @@ export class UserController {
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @Get()
-  @ApiBody({ type: CreateUserDto })
   async getUserFromJwt(@UserId() userId: string) {
     const user = await User.findOne({
       where: { id: userId },

@@ -24,7 +24,7 @@ export class ProductController {
   @Get()
   async getAllProducts() {
     const products = await Product.findAll({
-      attributes: ['name', 'brandName', 'price', 'imgUrl', 'discount'],
+      attributes: ['name', 'brandName', 'price', 'imgUrl', 'stock'],
     });
 
     return products;
@@ -34,10 +34,10 @@ export class ProductController {
   @ApiBearerAuth()
   @Get(':productId')
   @ApiParam({ name: 'productId' })
-  async getProductById(@Param() productId) {
+  async getProductById(@Param('productId') productId: string) {
     const product = await Product.findOne({
       where: { id: productId },
-      attributes: ['name', 'brandName', 'price', 'imgUrl', 'discount'],
+      attributes: ['name', 'brandName', 'price', 'imgUrl'],
     });
 
     if (!product) {
@@ -74,9 +74,10 @@ export class ProductController {
   @ApiBearerAuth()
   @Put(':productId')
   @ApiBody({ type: CreateProductDto })
+  @ApiParam({ name: 'productId' })
   async updateProduct(
     @Body() createProductDto: CreateProductDto,
-    @Param() productId,
+    @Param('productId') productId,
   ) {
     const product = await Product.findOne({
       where: { id: productId },

@@ -26,6 +26,12 @@ export class CreateProductDto {
   @IsUrl()
   public imgUrl: string;
 
+  @ApiProperty({
+    example: 10,
+  })
+  @IsNumber()
+  public stock: number;
+
   constructor(name: string, brandName: string, price: number, imgUrl: string) {
     this.name = name;
     this.brandName = brandName;

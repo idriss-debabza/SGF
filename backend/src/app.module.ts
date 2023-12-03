@@ -6,6 +6,7 @@ import { AuthModule } from './auth/auth.module';
 import { databaseProviders } from './database/database.provider';
 import { UserModule } from './user/user.module';
 import { ProductModule } from './product/product.module';
+import { PurchaseModule } from './purchaseProduct/purchase.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { ProductModule } from './product/product.module';
     AuthModule,
     UserModule,
     ProductModule,
+    PurchaseModule,
   ],
   providers: [JwtStrategy, ...databaseProviders],
   exports: [PassportModule, JwtModule],
