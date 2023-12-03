@@ -34,9 +34,7 @@ export class PurchaseController {
   @Get()
   async getAllPurchase(@UserId() userId: string) {
     const purchases = PurchaseProduct.findAll({
-      where: { id: userId },
       include: [Purchase, Product],
-      // attributes: ['id', 'purchaseId', 'productId'], // a revoir
     });
 
     return purchases;
@@ -47,8 +45,6 @@ export class PurchaseController {
   @Get(':purchaseId')
   @ApiParam({ name: 'purchaseId' })
   async getPurchaseById(@Param() purchaseId) {
-    //faut recuperer l'utilisateur tout d'abord et voir s'il a le droit de voir cette commande
-
     const purchase = await PurchaseProduct.findOne({
       where: { id: purchaseId }, //a revoir
     });
