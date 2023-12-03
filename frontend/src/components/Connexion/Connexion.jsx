@@ -20,17 +20,12 @@ const Connexion = () => {
       });
 
       console.log('Réponse du serveur:', response.data.accessToken);
-
       if (response.status === 201 && response.data.accessToken) {
         console.log('Connexion réussie');
-
-        // Store the JWT token in a cookie
         Cookies.set('jwt_token', response.data.accessToken        );
-
         navigate('/compte');
       } else {
         console.error('Échec de la connexion');
-        // Handle errors or display a connection failure message
       }
     } catch (error) {
       console.error('Erreur lors de la connexion:', error);
