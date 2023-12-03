@@ -10,12 +10,12 @@ const products = [
   { id: 4, name: "Produit 4", brandName: "Marque 4", price: "$29.99", imageUrl: "https://pic.clubic.com/v1/images/1863496/raw?fit=max&width=1200&hash=aac01b0be4face7b3719d47922f772b717b223a8" },
   { id: 5, name: "Produit 5", brandName: "Marque 5", price: "$19.99", imageUrl: "https://pic.clubic.com/v1/images/1863496/raw?fit=max&width=1200&hash=aac01b0be4face7b3719d47922f772b717b223a8" },
   { id: 6, name: "Produit 6", brandName: "Marque 6", price: "$29.99", imageUrl: "https://pic.clubic.com/v1/images/1863496/raw?fit=max&width=1200&hash=aac01b0be4face7b3719d47922f772b717b223a8" },
-  { id: 1, name: "Produit 1", brandName: "Marque 1", price: "$19.99", imageUrl: "https://pic.clubic.com/v1/images/1863496/raw?fit=max&width=1200&hash=aac01b0be4face7b3719d47922f772b717b223a8" },
-  { id: 2, name: "Produit 2", brandName: "Marque 2", price: "$29.99", imageUrl: "https://pic.clubic.com/v1/images/1863496/raw?fit=max&width=1200&hash=aac01b0be4face7b3719d47922f772b717b223a8" },
-  { id: 3, name: "Produit 3", brandName: "Marque 3", price: "$19.99", imageUrl: "https://pic.clubic.com/v1/images/1863496/raw?fit=max&width=1200&hash=aac01b0be4face7b3719d47922f772b717b223a8" },
-  { id: 4, name: "Produit 4", brandName: "Marque 4", price: "$29.99", imageUrl: "https://pic.clubic.com/v1/images/1863496/raw?fit=max&width=1200&hash=aac01b0be4face7b3719d47922f772b717b223a8" },
-  { id: 5, name: "Produit 5", brandName: "Marque 5", price: "$19.99", imageUrl: "https://pic.clubic.com/v1/images/1863496/raw?fit=max&width=1200&hash=aac01b0be4face7b3719d47922f772b717b223a8" },
-  { id: 6, name: "Produit 6", brandName: "Marque 6", price: "$29.99", imageUrl: "https://pic.clubic.com/v1/images/1863496/raw?fit=max&width=1200&hash=aac01b0be4face7b3719d47922f772b717b223a8" },
+  { id: 7, name: "Produit 1", brandName: "Marque 1", price: "$19.99", imageUrl: "https://pic.clubic.com/v1/images/1863496/raw?fit=max&width=1200&hash=aac01b0be4face7b3719d47922f772b717b223a8" },
+  { id: 9, name: "Produit 2", brandName: "Marque 2", price: "$29.99", imageUrl: "https://pic.clubic.com/v1/images/1863496/raw?fit=max&width=1200&hash=aac01b0be4face7b3719d47922f772b717b223a8" },
+  { id: 10, name: "Produit 3", brandName: "Marque 3", price: "$19.99", imageUrl: "https://pic.clubic.com/v1/images/1863496/raw?fit=max&width=1200&hash=aac01b0be4face7b3719d47922f772b717b223a8" },
+  { id: 11, name: "Produit 4", brandName: "Marque 4", price: "$29.99", imageUrl: "https://pic.clubic.com/v1/images/1863496/raw?fit=max&width=1200&hash=aac01b0be4face7b3719d47922f772b717b223a8" },
+  { id: 12, name: "Produit 5", brandName: "Marque 5", price: "$19.99", imageUrl: "https://pic.clubic.com/v1/images/1863496/raw?fit=max&width=1200&hash=aac01b0be4face7b3719d47922f772b717b223a8" },
+  { id: 13, name: "Produit 6", brandName: "Marque 6", price: "$29.99", imageUrl: "https://pic.clubic.com/v1/images/1863496/raw?fit=max&width=1200&hash=aac01b0be4face7b3719d47922f772b717b223a8" },
 
 ];
 

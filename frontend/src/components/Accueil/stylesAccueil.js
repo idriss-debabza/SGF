@@ -8,7 +8,7 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
   margin-top: 60px;
-  width: 100%;
+  /* maxWidth: 100%; Remove this line if not needed */
 `;
 
 export const StyledCard = styled(Card)`

@@ -1,7 +1,33 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Typography, Avatar, Button, Paper } from "@mui/material";
+import Cookies from "js-cookie";
+import axios from "axios";
 
 const ProfilUtilisateur = ({ handleLogout }) => {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+
+  useEffect(() => {
+    const token = Cookies.get('jwt_token');
+
+    axios.get(`http://localhost:3000/user`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then((response) => {
+      setFirstName(response.data.firstName);
+      setLastName(response.data.lastName);
+    })
+    .catch((error) => {
+      console.error(
+        "Erreur lors de la récupération de l'utilisateur:",
+        error
+      );
+    });
+
+  }, []);
+
   return (
     <Paper
       elevation={3}
@@ -26,7 +52,7 @@ const ProfilUtilisateur = ({ handleLogout }) => {
       />
 
       <Typography variant="h6" style={{ marginBottom: "20px" }}>
-        utilisateur
+        {`${firstName} ${lastName}` || "Utilisateur"}
       </Typography>
 
       <Button

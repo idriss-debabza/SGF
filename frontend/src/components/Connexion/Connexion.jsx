@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Typography } from '@mui/material';
-import { StyledContainer, StyledForm, StyledTextField, StyledButton, StyledLink } from './styledConnexion';
+import { StyledContainer, StyledForm, StyledTextField, StyledButton } from './styledConnexion';
 import axios from 'axios';
+import Cookies from 'js-cookie';
 import LockIcon from '@mui/icons-material/Lock';
 import EmailIcon from '@mui/icons-material/Email';
-
 
 const Connexion = () => {
   const [email, setEmail] = useState('');
@@ -14,23 +14,23 @@ const Connexion = () => {
 
   const handleConnexion = async () => {
     try {
-      const response = await axios.post('http://localhost:8000/api/connexion', {
+      const response = await axios.post('http://localhost:3000/auth/login', {
         email,
-        motDePasse,
+        password: motDePasse,
       });
 
-      console.log('Réponse du serveur:', response);
+      console.log('Réponse du serveur:', response.data.accessToken);
 
-      if (response.status === 200) {
+      if (response.status === 201 && response.data.accessToken) {
         console.log('Connexion réussie');
-        // Store the user ID and token in localStorage
-        localStorage.setItem('userId', response.data.userId);
-        localStorage.setItem('token', response.data.token);
-        // Utiliser useNavigate pour rediriger l'utilisateur vers la page profil
-        navigate('/profil');
+
+        // Store the JWT token in a cookie
+        Cookies.set('jwt_token', response.data.accessToken        );
+
+        navigate('/compte');
       } else {
         console.error('Échec de la connexion');
-        // Gérer les erreurs ou afficher un message d'échec de connexion
+        // Handle errors or display a connection failure message
       }
     } catch (error) {
       console.error('Erreur lors de la connexion:', error);
@@ -56,9 +56,7 @@ const Connexion = () => {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           InputProps={{
-            startAdornment: (
-              <EmailIcon color="action" sx={{ marginRight: 1 }} />
-            ),
+            startAdornment: <EmailIcon color="action" sx={{ marginRight: 1 }} />,
           }}
         />
         <StyledTextField
@@ -74,9 +72,7 @@ const Connexion = () => {
           value={motDePasse}
           onChange={(e) => setMotDePasse(e.target.value)}
           InputProps={{
-            startAdornment: (
-              <LockIcon color="action" sx={{ marginRight: 1 }} />
-            ),
+            startAdornment: <LockIcon color="action" sx={{ marginRight: 1 }} />,
           }}
         />
         <StyledButton
@@ -87,7 +83,6 @@ const Connexion = () => {
         >
           Se connecter
         </StyledButton>
-        
       </StyledForm>
     </StyledContainer>
   );

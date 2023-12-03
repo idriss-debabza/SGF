@@ -12,7 +12,7 @@ export default function NavBar() {
           <StyledTypography variant="h6" component={Link} to="/accueil">
             Accueil
           </StyledTypography>
-          <StyledButton component={Link} to="/profil">
+          <StyledButton component={Link} to="/compte">
             Profil
           </StyledButton>
           <StyledButton component={Link} to="/connexion">
