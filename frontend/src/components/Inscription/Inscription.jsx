@@ -33,25 +33,17 @@ const Inscription = () => {
       }
 
       // Enregistrez l'utilisateur dans la base de données
-      const inscriptionResponse = await axios.post("http://localhost:8000/api/inscription", {
-        nom,
-        prenom,
-        email,
-        motDePasse,
-      });
+      const inscriptionResponse = await axios.post("http://localhost:3000/user", {
+      firstName: nom, 
+      lastName: prenom,
+      email: email,
+      password: motDePasse,
+    });
 
       console.log(inscriptionResponse.data);
-      // Vérifiez si la réponse contient un token
-    if (inscriptionResponse.data && inscriptionResponse.data.token) {
-      // Stockez le token dans le localStorage
-      localStorage.setItem('authToken', inscriptionResponse.data.token);
-      console.log("Token stocké dans le localStorage");
-
-    } else {
-      console.error("Aucun token reçu du serveur");
-    }
-      if (inscriptionResponse.status === 200) {
-        navigate('/profil');
+    
+      if (inscriptionResponse.status === 201) {
+        navigate('/connexion');
       }
     } catch (error) {
       console.error("Erreur lors de l'inscription:", error);

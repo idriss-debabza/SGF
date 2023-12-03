@@ -5,51 +5,25 @@ import { Container, Grid, Paper } from "@mui/material";
 import Menu from './Menu/Menu';
 import Contenu from './Contenu/Contenu';
 import ProfilUtilisateur from './DetailProfil/ProfilUtilisateur';
-import { jwtDecode } from 'jwt-decode';
+import Cookies from 'js-cookie'; // Import the js-cookie library
 
 const Profil = () => {
   const [selectedMenu, setSelectedMenu] = useState("dashboard");
-  const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Get the user ID from localStorage
-    const userId = localStorage.getItem("userId");
-    // Get the token from localStorage
-    const token = localStorage.getItem("token");
-    try {
-      const decodedToken = jwtDecode(token);
-      console.log(decodedToken);
-    } catch (error) {
-      console.error('Erreur lors du décodage du token :', error.message);
-    }
-    if (userId && token) {
-      axios
-        .get(`http://localhost:8000/utilisateurs/${userId}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then((response) => {
-          setUser(response.data);
-        })
-        .catch((error) => {
-          console.error(
-            "Erreur lors de la récupération de l'utilisateur:",
-            error
-          );
-        });
-    } else {
-      // Redirect to login page
+    // Get the token from cookies
+    const token = Cookies.get('jwt_token');
+
+    if (!token) {
+    
       navigate('/connexion');
     }
   }, []);
 
   const handleLogout = () => {
-    // Remove userId and token from localStorage
-    localStorage.removeItem('userId');
-    localStorage.removeItem('token');
-    
+    // Remove token from cookies
+    Cookies.remove('jwt_token');
 
     // Redirect to login page
     navigate('/connexion');
@@ -72,7 +46,7 @@ const Profil = () => {
                 elevation={3}
                 style={{ padding: "20px" }}
               >
-                <ProfilUtilisateur user={user} handleLogout={handleLogout} />
+                <ProfilUtilisateur  handleLogout={handleLogout} />
                 <Menu handleMenuClick={setSelectedMenu} />
               </Paper>
             </Grid>
