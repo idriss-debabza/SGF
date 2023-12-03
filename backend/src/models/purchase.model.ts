@@ -25,6 +25,9 @@ export class Purchase extends Model {
   @Column(DataType.ENUM('Gagne', 'Utilise'))
   typeOperation: string;
 
+  @Column(DataType.FLOAT)
+  total: number;
+
   @BelongsTo(() => User)
   user: User;
 }

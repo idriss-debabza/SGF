@@ -3,7 +3,10 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class CreatePurchaseDto {
   @ApiProperty({
-    example: [],
+    example: [
+      'e7f5da7b-f2da-41c9-9c6a-107322905f65',
+      'e7f5da7b-f2da-41c9-9c6a-107322905f65',
+    ],
   })
   @IsNotEmpty()
   @IsArray()
