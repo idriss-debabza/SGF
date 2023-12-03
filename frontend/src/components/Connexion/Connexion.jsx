@@ -1,57 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {
-  Container,
-  Typography,
-  TextField,
-  Button,
-  Link,
-  Box,
-} from '@mui/material';
+import { Typography } from '@mui/material';
+import { StyledContainer, StyledForm, StyledTextField, StyledButton, StyledLink } from './styledConnexion';
 import axios from 'axios';
 import LockIcon from '@mui/icons-material/Lock';
 import EmailIcon from '@mui/icons-material/Email';
-import { styled } from '@mui/system';
 
-const StyledContainer = styled(Container)`
-  && {
-    margin-top: 8px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-`;
-
-const StyledForm = styled(Box)`
-  && {
-    width: 100%;
-    margin-top: 1em;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-`;
-
-const StyledTextField = styled(TextField)`
-  && {
-    width: 100%;
-    margin-top: 8px;
-  }
-`;
-
-const StyledButton = styled(Button)`
-  && {
-    width: 100%;
-    margin-top: 24px;
-    margin-bottom: 16px;
-  }
-`;
-
-const StyledLink = styled(Link)`
-  && {
-    margin-top: 16px;
-  }
-`;
 
 const Connexion = () => {
   const [email, setEmail] = useState('');
@@ -128,14 +82,12 @@ const Connexion = () => {
         <StyledButton
           type="button"
           variant="contained"
-          color="primary"
+          color="action"
           onClick={handleConnexion}
         >
           Se connecter
         </StyledButton>
-        <StyledLink href="#" variant="body2">
-          Mot de passe oublié ?
-        </StyledLink>
+        
       </StyledForm>
     </StyledContainer>
   );

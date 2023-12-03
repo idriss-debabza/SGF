@@ -3,39 +3,19 @@ import axios from "axios";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import {
   Container,
-  Paper,
   TextField,
-  Button,
   Typography,
-  Avatar,
   CssBaseline,
   Grid,
   Link,
-  styled,
 } from "@mui/material";
 import { LockOutlined as LockOutlinedIcon } from "@mui/icons-material";
-
-const StyledPaper = styled(Paper)({
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-  padding: "20px",
-  marginTop: "50px",
-});
-
-const StyledAvatar = styled(Avatar)({
-  margin: "8px",
-  backgroundColor: "#1976D2",
-});
-
-const StyledForm = styled("form")({
-  width: "100%", // Fix IE 11 issue.
-  marginTop: "8px",
-});
-
-const StyledSubmit = styled(Button)({
-  margin: "24px 0 16px",
-});
+import {
+  StyledPaper,
+  StyledAvatar,
+  StyledForm,
+  StyledSubmit,
+} from "./stylesInscription";
 
 const Inscription = () => {
   const [nom, setNom] = useState("");
@@ -70,12 +50,8 @@ const Inscription = () => {
     } else {
       console.error("Aucun token reçu du serveur");
     }
-
-      // Une fois l'inscription réussie, redirigez l'utilisateur vers le test de personnalité
       if (inscriptionResponse.status === 200) {
-        // Ajoutez votre logique de redirection ici (par exemple, utiliser react-router-dom)
-        // Remplacez '/testepersonnalite' par le chemin de votre page de test de personnalité
-        navigate('/testepersonnalite');
+        navigate('/profil');
       }
     } catch (error) {
       console.error("Erreur lors de l'inscription:", error);

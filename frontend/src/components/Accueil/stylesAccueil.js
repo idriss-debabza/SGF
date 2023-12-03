@@ -1,6 +1,5 @@
-// styles.js
 import styled from 'styled-components';
-import { Card, CardMedia, CardContent, Typography, Rating } from '@mui/material';
+import { Card, CardMedia, CardContent, Typography, Rating, Button, Box } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 export const Container = styled.div`
@@ -8,21 +7,24 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-`;
-
-export const LoadingText = styled.p`
-  font-size: 18px;
-  text-align: center;
-  margin-top: 20px;
+  margin-top: 60px;
+  width: 100%;
 `;
 
 export const StyledCard = styled(Card)`
-  margin-bottom: 20px;
-  align-items: center;
+  width: 100%;
+  max-width: 300px; 
+  border: 1px solid #ddd; 
+  transition: transform 0.2s; 
+  margin: 0 auto;
+
+  &:hover {
+    transform: scale(1.05);
+  }
 `;
 
 export const StyledCardMedia = styled(CardMedia)`
-  height: 330px; /* Ajustez la hauteur selon vos besoins */
+  height: 200px;
 `;
 
 export const StyledCardContent = styled(CardContent)`
@@ -32,7 +34,7 @@ export const StyledCardContent = styled(CardContent)`
 `;
 
 export const AttractionTitle = styled(Typography)`
-  font-size: 18px;
+  font-size: 16px; 
   margin-top: 10px;
 `;
 
@@ -40,9 +42,18 @@ export const AttractionRating = styled(Rating)`
   margin-top: 10px;
 `;
 
+export const DiscountInfo = styled(Typography)`
+  margin-top: 5px;
+  color: #ff0000; 
+`;
+
+export const BuyButton = styled(Button)`
+  margin-top: 10px;
+`;
+
 export const SiteLink = styled(Link)`
   margin-top: 10px;
   text-decoration: none;
-  color: #007bff; /* Couleur du lien, ajustez selon vos besoins */
+  color: #007bff;
   font-weight: bold;
 `;

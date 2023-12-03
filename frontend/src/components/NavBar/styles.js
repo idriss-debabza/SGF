@@ -8,8 +8,9 @@ import { Link } from 'react-router-dom';
 
 export const StyledAppBar = styled(AppBar)({
   backgroundColor: '#2196f3', // Changer la couleur de fond selon vos préférences
-  borderRadius: 10,
-  margin: '30px 0',
+  borderRadius: 2,
+  margin: ' 0',
+
 });
 
 export const StyledTypography = styled(Typography)({

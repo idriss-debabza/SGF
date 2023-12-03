@@ -6,37 +6,68 @@ import {
   StyledButton,
 } from './stylesProfil';
 
-import { Divider } from '@mui/material';
+import { Divider, Avatar, IconButton, Card, CardContent, Typography, Grid } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
 
 const Profile = () => {
-  
   return (
     <StyledPaper>
-      <StyledTypography variant="h4" gutterBottom>
-        Détails du profil
-      </StyledTypography>
+      <div style={{ display: 'flex', alignItems: 'center', marginBottom: '16px' }}>
+        
+        <div>
+          <StyledTypography variant="h4" gutterBottom>
+            Détails du profil
+          </StyledTypography>
+        </div>
+      </div>
       <Divider />
-      <StyledGridItem container spacing={2}>
-        <StyledGridItem item xs={6}>
-          <StyledTypography variant="body1">Nom: John Doe</StyledTypography>
-        </StyledGridItem>
-        <StyledGridItem item xs={6}>
-          <StyledTypography variant="body1">Prénom: John</StyledTypography>
-        </StyledGridItem>
-        <StyledGridItem item xs={12}>
-          <StyledTypography variant="body1">
-            Email: john.doe@example.com
-          </StyledTypography>
-        </StyledGridItem>
-        <StyledGridItem item xs={12}>
-          <StyledTypography variant="body1">
-            Adresse Email: 123 Main St, Cityville
-          </StyledTypography>
-        </StyledGridItem>
-      </StyledGridItem>
+      <Grid container spacing={1}>
+        <Grid item xs={12} sm={12}>
+          <Card>
+            <CardContent>
+              <Typography variant="h6" gutterBottom>
+                Informations personnelles
+              </Typography>
+              <Divider />
+              <StyledGridItem container spacing={0}>
+                <StyledGridItem item xs={12}>
+                  <Typography variant="body1">Nom: Utilisateur </Typography>
+                </StyledGridItem>
+                <StyledGridItem item xs={12}>
+                  <Typography variant="body1">Prénom: Utilisateur</Typography>
+                </StyledGridItem>
+                <StyledGridItem item xs={12}>
+                  <Typography variant="body1">Email: utilisateur@gmail.com</Typography>
+                </StyledGridItem>
+              </StyledGridItem>
+            </CardContent>
+          </Card>
+        </Grid>
+        <Grid item xs={12} sm={12}>
+          <Card>
+            <CardContent>
+              <Typography variant="h6" gutterBottom>
+                Adresse
+              </Typography>
+              <Divider />
+              <StyledGridItem container spacing={0}>
+                <StyledGridItem item xs={12}>
+                  <Typography variant="body1">Adresse: 1 rue quelque chose</Typography>
+                </StyledGridItem>
+                <StyledGridItem item xs={12}>
+                  <Typography variant="body1">Ville: St-Denis</Typography>
+                </StyledGridItem>
+                <StyledGridItem item xs={12}>
+                  <Typography variant="body1">Code postal: 93000</Typography>
+                </StyledGridItem>
+              </StyledGridItem>
+            </CardContent>
+          </Card>
+        </Grid>
+      </Grid>
       <Divider />
       <StyledButton variant="contained" color="primary">
-        Modifier
+        Modifier le profil
       </StyledButton>
     </StyledPaper>
   );

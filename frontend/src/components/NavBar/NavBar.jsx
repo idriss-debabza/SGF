@@ -12,8 +12,8 @@ export default function NavBar() {
           <StyledTypography variant="h6" component={Link} to="/accueil">
             Accueil
           </StyledTypography>
-          <StyledButton component={Link} to="/Compte">
-            Compte
+          <StyledButton component={Link} to="/profil">
+            Profil
           </StyledButton>
           <StyledButton component={Link} to="/connexion">
             Connexion
