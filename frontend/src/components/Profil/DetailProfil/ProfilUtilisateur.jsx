@@ -6,6 +6,7 @@ import axios from "axios";
 const ProfilUtilisateur = ({ handleLogout }) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  
 
   useEffect(() => {
     const token = Cookies.get('jwt_token');
@@ -18,6 +19,8 @@ const ProfilUtilisateur = ({ handleLogout }) => {
     .then((response) => {
       setFirstName(response.data.firstName);
       setLastName(response.data.lastName);
+      Cookies.set('totalDiscount', response.data.totalDiscount);
+      
     })
     .catch((error) => {
       console.error(
@@ -52,7 +55,11 @@ const ProfilUtilisateur = ({ handleLogout }) => {
       />
 
       <Typography variant="h6" style={{ marginBottom: "20px" }}>
-        {`${firstName} ${lastName}` || "Utilisateur"}
+        {`${firstName} ${lastName}` }
+      </Typography>
+
+      <Typography variant="h6" style={{ marginBottom: "20px" }}>
+      Total des points : {Cookies.get('totalDiscount')}
       </Typography>
 
       <Button

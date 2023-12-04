@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Grid, Typography, Box, Button } from "@mui/material";
-import { AddShoppingCart } from "@mui/icons-material";
+import LocalOfferIcon from "@mui/icons-material/LocalOffer";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import StoreIcon from "@mui/icons-material/Store";
+import EuroSymbolIcon from "@mui/icons-material/EuroSymbol";
 import {
   Container,
   StyledCard,
@@ -9,6 +12,8 @@ import {
   StyledCardContent,
   DiscountInfo,
 } from "./stylesAccueil";
+
+// ... (other imports)
 
 const Home = () => {
   const [products, setProducts] = useState([]);
@@ -24,7 +29,7 @@ const Home = () => {
     };
 
     fetchData();
-  }, []); 
+  }, []);
 
   return (
     <Container maxWidth="xl">
@@ -43,33 +48,32 @@ const Home = () => {
                   {product.name}
                 </Typography>
                 <Typography
-                  variant="body2"
+                  variant="body1"
                   color="textSecondary"
                   component="div"
                   gutterBottom
                 >
-                  {product.brandName}
+                  Price: {product.price} <EuroSymbolIcon />
                 </Typography>
                 <Typography
-                  variant="body2"
+                  variant="body1"
                   color="textSecondary"
                   component="div"
                   gutterBottom
                 >
-                  {product.price}
+                  {product.stock > 0 ? (
+                    <React.Fragment>
+                      In Stock: {product.stock} <StoreIcon />
+                    </React.Fragment>
+                  ) : (
+                    <React.Fragment>
+                      Sold Out <CheckCircleIcon color="error" />
+                    </React.Fragment>
+                  )}
                 </Typography>
                 <DiscountInfo variant="body2" component="div" gutterBottom>
-                  10% Off
+                  10% Off <LocalOfferIcon />
                 </DiscountInfo>
-                <Box mt={2}>
-                  <Button
-                    variant="contained"
-                    color="info"
-                    startIcon={<AddShoppingCart />}
-                  >
-                    Add to Cart
-                  </Button>
-                </Box>
               </StyledCardContent>
             </StyledCard>
           </Grid>

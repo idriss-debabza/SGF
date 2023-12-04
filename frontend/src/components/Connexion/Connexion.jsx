@@ -19,7 +19,7 @@ const Connexion = () => {
         password: motDePasse,
       });
 
-      console.log('Réponse du serveur:', response.data.accessToken);
+      console.log('Réponse du serveur:', response.data);
       if (response.status === 201 && response.data.accessToken) {
         console.log('Connexion réussie');
         Cookies.set('jwt_token', response.data.accessToken        );

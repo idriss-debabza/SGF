@@ -24,7 +24,7 @@ export class UserController {
   async getUserFromJwt(@UserId() userId: string) {
     const user = await User.findOne({
       where: { id: userId },
-      attributes: ['firstName', 'lastName', 'email'],
+      
     });
 
     if (!user) {

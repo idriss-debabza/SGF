@@ -1,34 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Grid, List, Collapse, Divider, Typography, ThemeProvider, createTheme } from '@mui/material';
 import { CreditCard, Loyalty } from '@mui/icons-material';
 import { StyledTypography, StyledList, StyledListItem, StyledListItemTextCard, StyledListItemTextPoint } from './styledDashboard';
+import Cookies from 'js-cookie';
+import axios from 'axios';
 
-const Products = [
-  { id: 1, name: 'Product 1', price: '$10.99' , discount  : '20%' },
-  { id: 2, name: 'Product 2', price: '$15.99', discount  : '20%' },
-  { id: 3, name: 'Product 3', price: '$20.99' , discount  : '20%'},
-  { id: 4, name: 'Product 4', price: '$25.99', discount  : '20%' },
-];
+
 
 const pointPaymentProducts = [
-  { id: 1, name: 'Product 1', price: '$10.99', discount  : '20%' },
-  { id: 2, name: 'Product 2', price: '$15.99' , discount  : '20%'},
-  { id: 3, name: 'Product 3', price: '$50.99', discount  : '20%' },
-  { id: 4, name: 'Product 4', price: '$25.99' , discount  : '20%'},
+  { id: 1, name: 'Product 1', price: '$10.99' },
+  { id: 2, name: 'Product 2', price: '$15.99' },
+  { id: 3, name: 'Product 3', price: '$20.99' },
+  { id: 4, name: 'Product 4', price: '$25.99' },
 ];
 
-const purchaseHistory = [
-  { id: 1, type: 'cardPayment', products: Products },
-  { id: 2, type: 'pointPayment', products: pointPaymentProducts },
-  { id: 3, type: 'cardPayment', products: Products },
-  { id: 4, type: 'cardPayment', products: Products },
-  { id: 5, type: 'pointPayment', products: Products },
-  // Add more purchase history entries as needed
-];
-
-const calculateTotalPrice = (products) => {
-  return products.reduce((total, product) => total + parseFloat(product.price.replace('$', '')), 0).toFixed(2);
-};
+function truncateText(text, maxLength) {
+  return text.length > maxLength ? `${text.slice(0, maxLength)}...` : text;
+}
 
 
 const theme = createTheme({
@@ -46,13 +34,56 @@ const theme = createTheme({
 });
 
 const Dashboard = () => {
-  const [openPurchase, setOpenPurchase] = useState(null);
+  const [isCardPaymentOpen, setCardPaymentOpen] = useState(false);
+  const [isPointPaymentOpen, setPointPaymentOpen] = useState(false);
+  const [purchaseHistory, setPurchaseHistory] = useState([]);
 
-  const togglePurchase = (id) => {
-    setOpenPurchase((prevOpenPurchase) => (prevOpenPurchase === id ? null : id));
+
+  useEffect(() => {
+    const token = Cookies.get('jwt_token');
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3000/purchase`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        console.log(response.data);
+        setPurchaseHistory(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+  
+    fetchData();
+  }, []);
+
+  const toggleCardPayment = () => {
+    setCardPaymentOpen(!isCardPaymentOpen);
+    
   };
 
- 
+  const togglePointPayment = () => {
+    setPointPaymentOpen(!isPointPaymentOpen);
+    
+  };
+
+  const calculateTotalCardPayment = () => {
+    const total = purchaseHistory.reduce((acc, purchase) => {
+      const priceValue = typeof purchase.product.price === 'string' ?
+        parseFloat(purchase.product.price.replace('€', '').trim()) :
+        purchase.product.price;
+
+      if (!isNaN(priceValue)) {
+        return acc + priceValue;
+      } else {
+        console.warn('Invalid price value:', purchase.product.price);
+        return acc;
+      }
+    }, 0);
+
+    return total.toFixed(2); // Round to 2 decimal places
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -62,44 +93,37 @@ const Dashboard = () => {
         </StyledTypography>
         <Divider style={{ marginBottom: '20px' }} />
 
-        {purchaseHistory.map((purchase) => (
-          <div key={purchase.id}>
-            <StyledTypography
-              variant="h5"
-              onClick={() => togglePurchase(purchase.id)}
-              style={{ cursor: 'pointer', color: purchase.type === 'cardPayment' ? '#2196f3' : '#f44336' }}
-            >
-              {purchase.type === 'cardPayment' ? <CreditCard /> : <Loyalty />} Achat {purchase.id}
-              <span style={{ marginLeft: '10px', fontWeight: 'normal' }}>(Total: ${calculateTotalPrice(purchase.products)})</span>
-        
-            </StyledTypography>
-            <Collapse in={openPurchase === purchase.id}>
-              <StyledList>
-                {purchase.products.map((product) => (
-                  <StyledListItem key={product.id}>
-                    {purchase.type === 'cardPayment' ? (
-                      <>
-                        <StyledListItemTextCard primary={product.name} />
-                        <StyledListItemTextCard primary={product.price} />
-                        <StyledListItemTextCard primary={product.discount} />
-                      </>
-                    ) : (
-                      <>
-                        <StyledListItemTextPoint primary={product.name} />
-                        <StyledListItemTextPoint primary={product.price} />
-                        <StyledListItemTextPoint primary={product.discount} />
-                      </>
-                    )}
-                  </StyledListItem>
-                ))}
-              </StyledList>
-            </Collapse>
-            <Divider style={{ marginBottom: '20px' }} />
-          </div>
-        ))}
+        <StyledTypography variant="h5" onClick={toggleCardPayment} style={{ cursor: 'pointer' }}>
+        <CreditCard /> Achat avec carte bancaire (Total : {calculateTotalCardPayment()} €)
+        </StyledTypography>
+        {isCardPaymentOpen && (
+          <StyledList>
+            {purchaseHistory.map((purchase) => (
+              <StyledListItem key={purchase.id}>
+                <StyledListItemTextCard primary={truncateText(purchase.product.name, 20)} />
+                <StyledListItemTextCard primary={`${purchase.product.price} €`} />
+                <StyledListItemTextCard primary={` ${purchase.purchase.typeOperation}`} />
+              </StyledListItem>
+            ))}
+          </StyledList>
+        )}
+
+        <Divider style={{ marginBottom: '20px' }} />
+        <StyledTypography variant="h5" onClick={togglePointPayment} style={{ cursor: 'pointer' }}>
+          <Loyalty /> Achat avec points
+        </StyledTypography>
+        {isPointPaymentOpen && (
+          <StyledList>
+            {pointPaymentProducts.map((product) => (
+              <StyledListItem key={product.id}>
+                <StyledListItemTextPoint primary={product.name} />
+                <StyledListItemTextPoint primary={product.price} />
+              </StyledListItem>
+            ))}
+          </StyledList>
+        )}
       </div>
     </ThemeProvider>
   );
 };
-
 export default Dashboard;
