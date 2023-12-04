@@ -19,7 +19,6 @@ import { Product } from '../models/product.model';
 @ApiTags('Product')
 @Controller('product')
 export class ProductController {
-  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @Get()
   async getAllProducts() {
@@ -31,7 +30,6 @@ export class ProductController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @ApiBearerAuth()
   @Get(':productId')
   @ApiParam({ name: 'productId' })
   async getProductById(@Param('productId') productId: string) {
@@ -65,6 +63,7 @@ export class ProductController {
       brandName: createProductDto.brandName,
       price: createProductDto.price,
       imgUrl: createProductDto.imgUrl,
+      stock: createProductDto.stock,
     });
 
     return HttpStatus.CREATED;

@@ -25,4 +25,7 @@ export class User extends Model {
 
   @Column(DataType.STRING)
   password: number;
+
+  @Column(DataType.FLOAT)
+  totalDiscount: number;
 }

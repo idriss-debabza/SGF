@@ -28,7 +28,7 @@ export class ProductDiscount extends Model {
   @Column(DataType.ENUM(...Object.values(DiscountTypeEnum)))
   discountType: DiscountTypeEnum;
 
-  @Column(DataType.INTEGER)
+  @Column(DataType.FLOAT)
   discountAmount: number;
 
   @BelongsTo(() => Product)
